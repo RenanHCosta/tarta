@@ -1,0 +1,30 @@
+package components
+
+templ toggleCart() {
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+}
+
+templ Navbar() {
+	<div class="navbar bg-base-100 flex justify-between">
+		<div class="block lg:hidden">
+			<button class="btn btn-circle">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+			</button>
+		</div>
+		<div>
+			<button hx-get="/" hx-swap="innerHTML" hx-target="#main-content" class="btn btn-ghost text-xl">
+				<img src="./static/img/tarta-bird.webp" loading="eager" alt="Tarta Bird" width="32" height="32"/>Tarta
+			</button>
+		</div>
+		<div class="hidden lg:block">
+			<ul class="flex">
+				<li><a class="px-4 py-7" href="">Lançamentos</a></li>
+				<li><a class="px-4 py-7" href="">Masculino</a></li>
+				<li><a class="px-4 py-7" href="">Feminino</a></li>
+			</ul>
+		</div>
+		<div>
+			@Drawer(toggleCart())
+		</div>
+	</div>
+}

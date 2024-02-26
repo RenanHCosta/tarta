@@ -1,0 +1,74 @@
+package templates
+
+import "github.com/RenanHCosta/tarta/templates/components"
+
+templ head(title string) {
+	<head>
+		<title>{ title }</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="static/script/htmx.min.js" defer></script>
+		<link rel="icon" type="image/x-icon" href="static/img/favicon.ico"/>
+		<link rel="stylesheet" href="static/css/style.css"/>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css"/>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+}
+
+templ footer() {
+	<footer class="p-10 bg-base-200 text-base-content">
+		<div class="footer container mx-auto px-5 py-8">
+			<nav>
+				<h6 class="footer-title">Services</h6>
+				<a class="link link-hover">Branding</a>
+				<a class="link link-hover">Design</a>
+				<a class="link link-hover">Marketing</a>
+				<a class="link link-hover">Advertisement</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title">Company</h6>
+				<a class="link link-hover">About us</a>
+				<a class="link link-hover">Contact</a>
+				<a class="link link-hover">Jobs</a>
+				<a class="link link-hover">Press kit</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title">Legal</h6>
+				<a class="link link-hover">Terms of use</a>
+				<a class="link link-hover">Privacy policy</a>
+				<a class="link link-hover">Cookie policy</a>
+			</nav>
+			<form>
+				<h6 class="footer-title">Newsletter</h6>
+				<fieldset class="form-control w-80">
+					<label class="label">
+						<span class="label-text">Enter your email address</span>
+					</label>
+					<div class="join">
+						<input type="text" placeholder="username@site.com" class="input input-bordered join-item"/>
+						<button class="btn btn-primary join-item">Subscribe</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</footer>
+}
+
+templ header() {
+	<header class="container w-full m-auto px-5">
+		@components.Navbar()
+	</header>
+}
+
+templ Layout(contents templ.Component, title string) {
+	<html data-theme="light">
+		@head(title)
+		<body class="flex flex-col h-full">
+			@header()
+			<main id="main-content" class="flex-1">
+				@contents
+			</main>
+		</body>
+		@footer()
+	</html>
+}
