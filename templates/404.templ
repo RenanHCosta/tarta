@@ -1,0 +1,11 @@
+package templates
+
+templ NotFound() {
+	<head>
+		<title>Tarta - Page not found</title>
+	</head>
+	<div class="container w-full h-full m-auto px-5 flex flex-col justify-center items-center gap-2">
+		<h1 class="text-5xl font-bold">Page not found</h1>
+		<p>Wanna try going back <button class="font-bold underline" hx-get="/" hx-swap="innerHTML" hx-target="#main-content">home</button>?</p>
+	</div>
+}

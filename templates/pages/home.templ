@@ -2,10 +2,26 @@ package pages
 
 import "github.com/RenanHCosta/tarta/templates/components"
 
+var items = []components.CarouselItem{
+	{
+		Image:       "./static/img/banner-carousel.webp",
+		Title:       "Título 1",
+		Description: "Descrição 1",
+	},
+	{
+		Image:       "./static/img/banner-carousel.webp",
+		Title:       "Título 2",
+		Description: "Descrição 2",
+	},
+}
+
 templ Home() {
-	@components.Carousel()
+	<head>
+		<title>Tarta - Home</title>
+	</head>
+	@components.Carousel(items)
 	<div class="container mx-auto px-5 py-8">
 		<h1>Home page content</h1>
-		<button class="font-bold underline" hx-get="/about" hx-swap="innerHTML ignoreTitle:true" hx-target="#main-content">Go to About</button>
+		<button class="font-bold underline" hx-get="/about" hx-swap="innerHTML" hx-target="#main-content">Go to About</button>
 	</div>
 }

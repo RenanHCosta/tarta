@@ -1,34 +1,40 @@
 package components
 
-templ Carousel() {
+import (
+	"fmt"
+)
+
+type CarouselItem struct {
+	Image       string
+	Title       string
+	Description string
+}
+
+templ renderItem(item CarouselItem, index int, imgLoading string) {
+	<div id={ fmt.Sprintf("slide%d", index) } class="hero-carousel-item hero carousel-item w-full relative">
+		<img src={ item.Image } class="w-full" loading={ imgLoading }/>
+		<div class="hero-overlay bg-opacity-60"></div>
+		<div class="hero-content text-center text-neutral-content">
+			<div class="max-w-md">
+				<h1 class="mb-5 text-5xl font-bold">{ item.Title }</h1>
+				<p class="mb-5">{ item.Description }</p>
+			</div>
+		</div>
+		<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+			<a href={ templ.URL(fmt.Sprintf("#slide%d", index-1)) } class="btn btn-circle">❮</a>
+			<a href={ templ.URL(fmt.Sprintf("#slide%d", index+1)) } class="btn btn-circle">❯</a>
+		</div>
+	</div>
+}
+
+templ Carousel(items []CarouselItem) {
 	<div class="carousel w-full">
-		<div id="slide1" class="carousel-item relative w-full">
-			<img src="./static/img/banner-carousel.webp" loading="eager" class="w-full"/>
-			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide4" class="btn btn-circle">❮</a>
-				<a href="#slide2" class="btn btn-circle">❯</a>
-			</div>
-		</div>
-		<div id="slide2" class="carousel-item relative w-full">
-			<img src="./static/img/banner-carousel.webp" loading="lazy" class="w-full"/>
-			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide1" class="btn btn-circle">❮</a>
-				<a href="#slide3" class="btn btn-circle">❯</a>
-			</div>
-		</div>
-		<div id="slide3" class="carousel-item relative w-full">
-			<img src="./static/img/banner-carousel.webp" loading="lazy" class="w-full"/>
-			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide2" class="btn btn-circle">❮</a>
-				<a href="#slide4" class="btn btn-circle">❯</a>
-			</div>
-		</div>
-		<div id="slide4" class="carousel-item relative w-full">
-			<img src="./static/img/banner-carousel.webp" loading="lazy" class="w-full"/>
-			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide3" class="btn btn-circle">❮</a>
-				<a href="#slide1" class="btn btn-circle">❯</a>
-			</div>
-		</div>
+		for index, item := range items {
+			if (index == 0) {
+				@renderItem(item, index, "eager")
+			} else {
+				@renderItem(item, index, "lazy")
+			}
+		}
 	</div>
 }

@@ -12,6 +12,19 @@ import "bytes"
 
 import "github.com/RenanHCosta/tarta/templates/components"
 
+var items = []components.CarouselItem{
+	{
+		Image:       "./static/img/banner-carousel.webp",
+		Title:       "Título 1",
+		Description: "Descrição 1",
+	},
+	{
+		Image:       "./static/img/banner-carousel.webp",
+		Title:       "Título 2",
+		Description: "Descrição 2",
+	},
+}
+
 func Home() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -25,11 +38,15 @@ func Home() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.Carousel().Render(ctx, templ_7745c5c3_Buffer)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>Tarta - Home</title></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mx-auto px-5 py-8\"><h1>Home page content</h1><button class=\"font-bold underline\" hx-get=\"/about\" hx-swap=\"innerHTML ignoreTitle:true\" hx-target=\"#main-content\">Go to About</button></div>")
+		templ_7745c5c3_Err = components.Carousel(items).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mx-auto px-5 py-8\"><h1>Home page content</h1><button class=\"font-bold underline\" hx-get=\"/about\" hx-swap=\"innerHTML\" hx-target=\"#main-content\">Go to About</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

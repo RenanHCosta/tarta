@@ -2,9 +2,8 @@ package templates
 
 import "github.com/RenanHCosta/tarta/templates/components"
 
-templ head(title string) {
+templ head() {
 	<head>
-		<title>{ title }</title>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script src="static/script/htmx.min.js" defer></script>
@@ -60,9 +59,9 @@ templ header() {
 	</header>
 }
 
-templ Layout(contents templ.Component, title string) {
+templ Layout(contents templ.Component) {
 	<html data-theme="light">
-		@head(title)
+		@head()
 		<body class="flex flex-col h-full">
 			@header()
 			<main id="main-content" class="flex-1">
