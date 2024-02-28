@@ -1,0 +1,105 @@
+package components
+
+import "github.com/RenanHCosta/tarta/integrations/vtex"
+
+var shelfId = "teste"
+
+script ShelfScript() {
+  const OPTIONS = { loop: false, align: 'start', containScroll: 'trimSnaps' }
+  const emblaNode = document.querySelector('#shelf .embla')
+
+  const prevBtnNode = document.querySelector('#shelf .embla__button--prev')
+  const nextBtnNode = document.querySelector('#shelf .embla__button--next')
+
+  const emblaApi = EmblaCarousel(emblaNode, OPTIONS)
+
+  const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
+    const togglePrevNextBtnsState = () => {
+      if (emblaApi.canScrollPrev()) prevBtn.removeAttribute('disabled')
+      else prevBtn.setAttribute('disabled', 'disabled')
+
+      if (emblaApi.canScrollNext()) nextBtn.removeAttribute('disabled')
+      else nextBtn.setAttribute('disabled', 'disabled')
+    }
+
+    emblaApi
+      .on('select', togglePrevNextBtnsState)
+      .on('init', togglePrevNextBtnsState)
+      .on('reInit', togglePrevNextBtnsState)
+
+    return () => {
+      prevBtn.removeAttribute('disabled')
+      nextBtn.removeAttribute('disabled')
+    }
+  }
+
+  const addPrevNextBtnsClickHandlers = (emblaApi, prevBtn, nextBtn) => {
+    const scrollPrev = () => {
+      emblaApi.scrollPrev()
+    }
+    const scrollNext = () => {
+      emblaApi.scrollNext()
+    }
+    prevBtn.addEventListener('click', scrollPrev, false)
+    nextBtn.addEventListener('click', scrollNext, false)
+
+    const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+      emblaApi,
+      prevBtn,
+      nextBtn
+    )
+
+    return () => {
+      removeTogglePrevNextBtnsActive()
+      prevBtn.removeEventListener('click', scrollPrev, false)
+      nextBtn.removeEventListener('click', scrollNext, false)
+    }
+  }
+
+  const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
+    emblaApi,
+    prevBtnNode,
+    nextBtnNode
+  )
+
+  emblaApi.on('destroy', removePrevNextBtnsClickHandlers)
+}
+
+templ Shelf(title string, input vtex.ProductSearchInput) {
+	<section>
+		<h2 class="text-3xl font-bold py-4 px-0 md:px-[5.25rem]">{ title }</h2>
+		<div id="shelf" class="relative">
+			<div
+				class="pointer-events-none p-4 absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center text-neutral-400 z-10"
+			>
+				<button class="embla__button--prev pointer-events-auto">
+					@RenderImage("Arrow Left", "shrink-0", "/static/svg/arrow.svg", 32, 32, "lazy")
+				</button>
+				<button class="embla__button--next rotate-180 pointer-events-auto">
+					@RenderImage("Arrow Right", "shrink-0", "/static/svg/arrow.svg", 32, 32, "lazy")
+				</button>
+			</div>
+			<div class="embla overflow-hidden mx-12">
+				<div hx-get="/product-search" hx-target="this" hx-swap="innerHTML" hx-trigger="load once" class="embla__container flex ml-6">
+					for i := 1; i <= 4; i++ {
+						<div class="flex flex-col gap-4 w-52 flex-[0_0_calc(100%-24px)] md:flex-[0_0_calc(25%-24px)] min-w-0 my-0 mx-3">
+							<div class="skeleton h-32 w-full"></div>
+							<div class="skeleton h-4 w-28"></div>
+							<div class="skeleton h-4 w-full"></div>
+							<div class="skeleton h-4 w-full"></div>
+						</div>
+					}
+				</div>
+			</div>
+			@ShelfScript()
+		</div>
+	</section>
+}
+
+templ RenderProductCards(products []vtex.ProductFragment) {
+	for _, product := range products {
+		<div class="embla__slide flex-[0_0_calc(100%-24px)] md:flex-[0_0_calc(25%-24px)] min-w-0 my-0 mx-3">
+			@ProductCard(product)
+		</div>
+	}
+}

@@ -1,6 +1,7 @@
 package pages
 
 import "github.com/RenanHCosta/tarta/templates/components"
+import "github.com/RenanHCosta/tarta/integrations/vtex"
 
 var items = []components.CarouselItem{
 	{
@@ -15,13 +16,15 @@ var items = []components.CarouselItem{
 	},
 }
 
-templ Home() {
+templ Home(input vtex.ProductSearchInput) {
 	<head>
 		<title>Tarta - Home</title>
+		<script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
 	</head>
 	@components.Carousel(items)
 	<div class="container mx-auto px-5 py-8">
 		<h1>Home page content</h1>
 		<button class="font-bold underline" hx-get="/about" hx-swap="innerHTML" hx-target="#main-content">Go to About</button>
+		@components.Shelf("Mais vendidos", input)
 	</div>
 }

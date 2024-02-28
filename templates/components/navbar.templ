@@ -13,7 +13,8 @@ templ Navbar() {
 		</div>
 		<div>
 			<button hx-get="/" hx-swap="innerHTML" hx-target="#main-content" class="btn btn-ghost text-xl">
-				<img src="./static/img/tarta-bird.webp" loading="eager" alt="Tarta Bird" width="32" height="32"/>Tarta
+				@RenderImage("Tarta Bird", "", "./static/img/tarta-bird.webp", 32, 34, "eager")
+				Tarta
 			</button>
 		</div>
 		<div class="hidden lg:block">

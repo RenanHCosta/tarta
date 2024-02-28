@@ -1,0 +1,8 @@
+package components
+
+import "github.com/RenanHCosta/tarta/integrations/vtex"
+import "strconv"
+
+templ RenderImage(name, class, imageUrl string, width int, height int, loading string) {
+	<img class={ class } src={ vtex.OptimizeImageURL(imageUrl, width, height) } width={ strconv.Itoa(width) } height={ strconv.Itoa(height) } loading={ loading } alt={ name }/>
+}

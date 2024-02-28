@@ -12,12 +12,22 @@ import "bytes"
 
 import (
 	"fmt"
+	"strings"
 )
 
 type CarouselItem struct {
 	Image       string
 	Title       string
 	Description string
+}
+
+func getMobileUrl(imageURL string) string {
+	lastIndex := strings.LastIndex(imageURL, ".")
+	if lastIndex == -1 {
+		return imageURL
+	}
+	baseURL := imageURL[:lastIndex]
+	return baseURL + "_xs.webp"
 }
 
 func renderItem(item CarouselItem, index int, imgLoading string) templ.Component {
@@ -41,7 +51,7 @@ func renderItem(item CarouselItem, index int, imgLoading string) templ.Component
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hero-carousel-item hero carousel-item w-full relative\"><img src=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hero-carousel-item hero carousel-item w-full relative\"><picture class=\"w-full\"><source srcset=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -49,7 +59,31 @@ func renderItem(item CarouselItem, index int, imgLoading string) templ.Component
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"w-full\" loading=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" media=\"(min-width: 768px)\"> <source srcset=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(getMobileUrl(item.Image)))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" media=\"(max-width: 767px)\"> <img width=\"1900\" height=\"650\" class=\"w-full\" src=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(item.Image))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" alt=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(item.Title))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" loading=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -57,14 +91,14 @@ func renderItem(item CarouselItem, index int, imgLoading string) templ.Component
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div class=\"hero-overlay bg-opacity-60\"></div><div class=\"hero-content text-center text-neutral-content\"><div class=\"max-w-md\"><h1 class=\"mb-5 text-5xl font-bold\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></picture><div class=\"hero-overlay bg-opacity-60\"></div><div class=\"hero-content text-center text-neutral-content\"><div class=\"max-w-md\"><h1 class=\"mb-5 text-5xl font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\components\carousel.templ`, Line: 18, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\components\carousel.templ`, Line: 32, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -77,7 +111,7 @@ func renderItem(item CarouselItem, index int, imgLoading string) templ.Component
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\components\carousel.templ`, Line: 19, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\components\carousel.templ`, Line: 33, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

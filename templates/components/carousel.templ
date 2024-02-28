@@ -2,6 +2,7 @@ package components
 
 import (
 	"fmt"
+	"strings"
 )
 
 type CarouselItem struct {
@@ -10,9 +11,22 @@ type CarouselItem struct {
 	Description string
 }
 
+func getMobileUrl(imageURL string) string {
+	lastIndex := strings.LastIndex(imageURL, ".")
+	if lastIndex == -1 {
+		return imageURL
+	}
+	baseURL := imageURL[:lastIndex]
+	return baseURL + "_xs.webp"
+}
+
 templ renderItem(item CarouselItem, index int, imgLoading string) {
 	<div id={ fmt.Sprintf("slide%d", index) } class="hero-carousel-item hero carousel-item w-full relative">
-		<img src={ item.Image } class="w-full" loading={ imgLoading }/>
+		<picture class="w-full">
+			<source srcset={ item.Image } media="(min-width: 768px)"/>
+			<source srcset={ getMobileUrl(item.Image) } media="(max-width: 767px)"/>
+			<img width="1900" height="650" class="w-full" src={ item.Image } alt={ item.Title } loading={ imgLoading }/>
+		</picture>
 		<div class="hero-overlay bg-opacity-60"></div>
 		<div class="hero-content text-center text-neutral-content">
 			<div class="max-w-md">

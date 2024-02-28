@@ -47,7 +47,15 @@ func Navbar() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar bg-base-100 flex justify-between\"><div class=\"block lg:hidden\"><button class=\"btn btn-circle\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"></path></svg></button></div><div><button hx-get=\"/\" hx-swap=\"innerHTML\" hx-target=\"#main-content\" class=\"btn btn-ghost text-xl\"><img src=\"./static/img/tarta-bird.webp\" loading=\"eager\" alt=\"Tarta Bird\" width=\"32\" height=\"32\">Tarta\r</button></div><div class=\"hidden lg:block\"><ul class=\"flex\"><li><a class=\"px-4 py-7\" href=\"\">Lançamentos</a></li><li><a class=\"px-4 py-7\" href=\"\">Masculino</a></li><li><a class=\"px-4 py-7\" href=\"\">Feminino</a></li></ul></div><div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar bg-base-100 flex justify-between\"><div class=\"block lg:hidden\"><button class=\"btn btn-circle\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"></path></svg></button></div><div><button hx-get=\"/\" hx-swap=\"innerHTML\" hx-target=\"#main-content\" class=\"btn btn-ghost text-xl\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = RenderImage("Tarta Bird", "", "./static/img/tarta-bird.webp", 32, 34, "eager").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Tarta\r</button></div><div class=\"hidden lg:block\"><ul class=\"flex\"><li><a class=\"px-4 py-7\" href=\"\">Lançamentos</a></li><li><a class=\"px-4 py-7\" href=\"\">Masculino</a></li><li><a class=\"px-4 py-7\" href=\"\">Feminino</a></li></ul></div><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
